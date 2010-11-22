@@ -18,8 +18,9 @@ class Manifesto
   #   Manifesto.cache :directory => './mobile', :compute_hash => false
   def self.cache(options = {})
     directory = options.fetch(:directory, './public')
+    files = options.fetch(:files, [])
     compute_hash  = options.fetch(:compute_hash, true)
-    validate_options(directory, compute_hash)
+    validate_options(directory, compute_hash, files)
     manifest = []
     hashes = ''
     
@@ -31,6 +32,11 @@ class Manifesto
         manifest << "#{normalize_path(directory, path)}\n"
         hashes += compute_file_contents_hash(path) if compute_hash
       end
+    end
+    
+    files.each do |file|
+      manifest << "#{file}\n"
+      #hashes += compute_file_contents_hash(file) if compute_hash
     end
     
     # Hash the hashes of each file and output as a comment.
@@ -68,9 +74,10 @@ class Manifesto
   end
   
   # Checks that the options passed to the <tt>cache</tt> method are valid.
-  def self.validate_options(directory, compute_hash)
+  def self.validate_options(directory, compute_hash, files)
     raise(ArgumentError, ":directory must be a real directory") unless valid_directory?(directory)
     raise(ArgumentError, ":compute_hash must be a boolean") unless valid_compute_hash?(compute_hash)
+    raise(ArgumentError, ":files must be an array") unless valid_files?(files)
   end
   
   # Checks that the <tt>compute_hash</tt> option is a boolean.
@@ -81,5 +88,10 @@ class Manifesto
   # Checks that the <tt>directory</tt> option corresponds to a real directory.
   def self.valid_directory?(directory)
     File.directory?(directory)
+  end
+  
+  # Checks that the <tt>files</tt> option corresponds to an array.
+  def self.valid_files?(files)
+    files.kind_of?(Array)
   end
 end
