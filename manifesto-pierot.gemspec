@@ -22,6 +22,7 @@ Gem::Specification.new do |s|
     "README.rdoc",
     "Rakefile",
     "VERSION",
+    "lib/manifesto-pierot.rb",
     "manifesto-pierot.gemspec",
     "spec/manifesto_spec.rb",
     "spec/spec.opts",
