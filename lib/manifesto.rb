@@ -16,6 +16,10 @@ class Manifesto
   #
   # Specify a directory and don't compute the hash:
   #   Manifesto.cache :directory => './mobile', :compute_hash => false
+  #
+  # Specify a files array:
+  #   Manifesto.cache :files => ['/file1', '/file2']
+  #
   def self.cache(options = {})
     directory = options.fetch(:directory, './public')
     files = options.fetch(:files, [])
