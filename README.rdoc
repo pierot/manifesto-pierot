@@ -1,4 +1,6 @@
 = Forked
+
+= manifesto-pierot
 This gem is forked from https://github.com/johntopley/manifesto 
 All information can be found there.
 
